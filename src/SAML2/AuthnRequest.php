@@ -381,10 +381,8 @@ class AuthnRequest extends Request
      *
      * @param bool $forceAuthn The ForceAuthn attribute.
      */
-    public function setForceAuthn($forceAuthn)
+    public function setForceAuthn(bool $forceAuthn)
     {
-        assert(is_bool($forceAuthn));
-
         $this->forceAuthn = $forceAuthn;
     }
 
@@ -405,10 +403,8 @@ class AuthnRequest extends Request
      *
      * @param string $ProviderName The ProviderName attribute.
      */
-    public function setProviderName($ProviderName)
+    public function setProviderName(string $ProviderName)
     {
-        assert(is_string($ProviderName));
-
         $this->ProviderName = $ProviderName;
     }
 
@@ -429,10 +425,8 @@ class AuthnRequest extends Request
      *
      * @param bool $isPassive The IsPassive attribute.
      */
-    public function setIsPassive($isPassive)
+    public function setIsPassive(bool $isPassive)
     {
-        assert(is_bool($isPassive));
-
         $this->isPassive = $isPassive;
     }
 
@@ -495,9 +489,8 @@ class AuthnRequest extends Request
     /**
      * @param int $ProxyCount
      */
-    public function setProxyCount($ProxyCount)
+    public function setProxyCount(int $ProxyCount)
     {
-        assert(is_int($ProxyCount));
         $this->ProxyCount = $ProxyCount;
     }
 
@@ -540,10 +533,8 @@ class AuthnRequest extends Request
      *
      * @param string|null $assertionConsumerServiceURL The AssertionConsumerServiceURL attribute.
      */
-    public function setAssertionConsumerServiceURL($assertionConsumerServiceURL)
+    public function setAssertionConsumerServiceURL(string $assertionConsumerServiceURL = null)
     {
-        assert(is_string($assertionConsumerServiceURL) || is_null($assertionConsumerServiceURL));
-
         $this->assertionConsumerServiceURL = $assertionConsumerServiceURL;
     }
 
@@ -562,10 +553,8 @@ class AuthnRequest extends Request
      *
      * @param string $protocolBinding The ProtocolBinding attribute.
      */
-    public function setProtocolBinding($protocolBinding)
+    public function setProtocolBinding(string $protocolBinding = null)
     {
-        assert(is_string($protocolBinding) || is_null($protocolBinding));
-
         $this->protocolBinding = $protocolBinding;
     }
 
@@ -584,10 +573,8 @@ class AuthnRequest extends Request
      *
      * @param int|null $attributeConsumingServiceIndex The AttributeConsumingServiceIndex attribute.
      */
-    public function setAttributeConsumingServiceIndex($attributeConsumingServiceIndex)
+    public function setAttributeConsumingServiceIndex(int $attributeConsumingServiceIndex = null)
     {
-        assert(is_int($attributeConsumingServiceIndex) || is_null($attributeConsumingServiceIndex));
-
         $this->attributeConsumingServiceIndex = $attributeConsumingServiceIndex;
     }
 
@@ -606,10 +593,8 @@ class AuthnRequest extends Request
      *
      * @param int|null $assertionConsumerServiceIndex The AssertionConsumerServiceIndex attribute.
      */
-    public function setAssertionConsumerServiceIndex($assertionConsumerServiceIndex)
+    public function setAssertionConsumerServiceIndex(int $assertionConsumerServiceIndex = null)
     {
-        assert(is_int($assertionConsumerServiceIndex) || is_null($assertionConsumerServiceIndex));
-
         $this->assertionConsumerServiceIndex = $assertionConsumerServiceIndex;
     }
 
@@ -628,10 +613,8 @@ class AuthnRequest extends Request
      *
      * @param array|null $requestedAuthnContext The RequestedAuthnContext.
      */
-    public function setRequestedAuthnContext($requestedAuthnContext)
+    public function setRequestedAuthnContext(array $requestedAuthnContext = [])
     {
-        assert(is_array($requestedAuthnContext) || is_null($requestedAuthnContext));
-
         $this->requestedAuthnContext = $requestedAuthnContext;
     }
 

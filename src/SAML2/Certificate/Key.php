@@ -37,7 +37,7 @@ class Key implements \ArrayAccess
      * @param  string $usage
      * @return bool
      */
-    public function canBeUsedFor($usage)
+    public function canBeUsedFor(string $usage)
     {
         if (!in_array($usage, static::getValidKeyUsages(), true)) {
             throw new InvalidKeyUsageException($usage);
@@ -58,6 +58,12 @@ class Key implements \ArrayAccess
         ];
     }
 
+    /**
+     * @param mixed $offset
+     * @return mixed
+     *
+     * Type hint not possible due to upstream method signature
+     */
     public function offsetExists($offset)
     {
         if (!is_string($offset)) {
@@ -66,6 +72,12 @@ class Key implements \ArrayAccess
         return array_key_exists($offset, $this->keyData);
     }
 
+    /**
+     * @param mixed $offset
+     * @return mixed
+     *
+     * Type hint not possible due to upstream method signature
+     */
     public function offsetGet($offset)
     {
         if (!is_string($offset)) {
@@ -74,6 +86,13 @@ class Key implements \ArrayAccess
         return $this->keyData[$offset];
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return void
+     *
+     * Type hint not possible due to upstream method signature
+     */
     public function offsetSet($offset, $value)
     {
         if (!is_string($offset)) {
@@ -82,6 +101,12 @@ class Key implements \ArrayAccess
         $this->keyData[$offset] = $value;
     }
 
+    /**
+     * @param mixed $offset
+     * @return void
+     *
+     * Type hint not possible due to upstream method signature
+     */
     public function offsetUnset($offset)
     {
         if (!is_string($offset)) {

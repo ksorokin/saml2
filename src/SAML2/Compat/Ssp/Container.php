@@ -38,7 +38,7 @@ class Container extends AbstractContainer
     /**
      * {@inheritdoc}
      */
-    public function debugMessage($message, $type)
+    public function debugMessage(\DOMElement $message, string $type)
     {
         \SimpleSAML\Utils\XML::debugMessage($message, $type);
     }
@@ -46,7 +46,7 @@ class Container extends AbstractContainer
     /**
      * {@inheritdoc}
      */
-    public function redirect($url, $data = [])
+    public function redirect(string $url, $data = [])
     {
         \SimpleSAML\Utils\HTTP::redirectTrustedURL($url, $data);
     }
@@ -54,7 +54,7 @@ class Container extends AbstractContainer
     /**
      * {@inheritdoc}
      */
-    public function postRedirect($url, $data = [])
+    public function postRedirect(string $url, $data = [])
     {
         \SimpleSAML\Utils\HTTP::submitPOSTData($url, $data);
     }
