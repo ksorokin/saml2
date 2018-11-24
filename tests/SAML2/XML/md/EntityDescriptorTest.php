@@ -107,13 +107,14 @@ XML
 
         $affiliationDescriptor = $entityDescriptor->AffiliationDescriptor;
         $this->assertTrue($affiliationDescriptor instanceof AffiliationDescriptor);
-        $this->assertEquals('asdf', $affiliationDescriptor->affiliationOwnerID);
-        $this->assertEquals('theAffiliationDescriptorID', $affiliationDescriptor->ID);
-        $this->assertEquals(1265027696, $affiliationDescriptor->validUntil);
-        $this->assertEquals('PT9000S', $affiliationDescriptor->cacheDuration);
-        $this->assertCount(2, $affiliationDescriptor->AffiliateMember);
-        $this->assertEquals('test', $affiliationDescriptor->AffiliateMember[0]);
-        $this->assertEquals('test2', $affiliationDescriptor->AffiliateMember[1]);
+        $this->assertEquals('asdf', $affiliationDescriptor->getAffiliationOwnerID());
+        $this->assertEquals('theAffiliationDescriptorID', $affiliationDescriptor->getID());
+        $this->assertEquals(1265027696, $affiliationDescriptor->getValidUntil());
+        $this->assertEquals('PT9000S', $affiliationDescriptor->getCacheDuration());
+        $affiliateMember = $affiliationDescriptor->getAffiliateMember();
+        $this->assertCount(2, $affiliateMember);
+        $this->assertEquals('test', $affiliateMember[0]);
+        $this->assertEquals('test2', $affiliateMember[1]);
     }
 
     public function testUnmarshalling2()

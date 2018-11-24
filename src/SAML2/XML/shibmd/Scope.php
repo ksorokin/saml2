@@ -24,14 +24,14 @@ final class Scope
      *
      * @var string
      */
-    public $scope;
+    private $scope;
 
     /**
      * Whether this is a regexp scope.
      *
      * @var bool
      */
-    public $regexp = false;
+    private $regexp = false;
 
     /**
      * Create a Scope.
@@ -47,6 +47,45 @@ final class Scope
         $this->scope = $xml->textContent;
         $this->regexp = Utils::parseBoolean($xml, 'regexp', false);
     }
+
+
+    /**
+     * Collect the value of the scope-property
+     * @return string
+     */
+    public function getScope()
+    {
+        return $this->scope;
+    }
+
+    /**
+     * Set the value of the scope-property
+     * @param string $scope
+     */
+    public function setScope(string $scope)
+    {
+        $this->scope = $scope;
+    }
+
+
+    /**
+     * Collect the value of the regexp-property
+     * @return boolean
+     */
+    public function isRegexpScope()
+    {
+        return $this->regexp;
+    }
+
+    /**
+     * Set the value of the regexp-property
+     * @param boolean $regexp
+     */
+    public function setIsRegexpScope(bool $regexp)
+    {
+        $this->regexp = $regexp;
+    }
+
 
     /**
      * Convert this Scope to XML.

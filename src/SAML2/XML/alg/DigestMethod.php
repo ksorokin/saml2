@@ -18,7 +18,7 @@ final class DigestMethod
      *
      * @var string
      */
-    public $Algorithm;
+    private $Algorithm;
 
 
     /**
@@ -38,6 +38,25 @@ final class DigestMethod
             throw new \Exception('Missing required attribute "Algorithm" in alg:DigestMethod element.');
         }
         $this->Algorithm = $xml->getAttribute('Algorithm');
+    }
+
+
+    /**
+     * Collect the value of the algorithm-property
+     * @return string
+     */
+    public function getAlgorithm()
+    {
+        return $this->Algorithm;
+    }
+
+    /**
+     * Set the value of the Algorithm-property
+     * @param string $algorithm
+     */
+    public function setAlgorithm(string $algorithm)
+    {
+        $this->Algorithm = $algorithm;
     }
 
 

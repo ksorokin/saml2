@@ -19,8 +19,8 @@ class ScopeTest extends \PHPUnit\Framework\TestCase
     public function testMarshallingLiteral()
     {
         $scope = new Scope();
-        $scope->scope = "example.org";
-        $scope->regexp = FALSE;
+        $scope->setScope("example.org");
+        $scope->setIsRegexpScope(false);
 
         $document = DOMDocumentFactory::fromString('<root />');
         $scopeElement = $scope->toXML($document->firstChild);
@@ -41,7 +41,7 @@ class ScopeTest extends \PHPUnit\Framework\TestCase
     public function testMarshallingImplicitRegexpValue()
     {
         $scope = new Scope();
-        $scope->scope = "example.org";
+        $scope->setScope("example.org");
 
         $document = DOMDocumentFactory::fromString('<root />');
         $scopeElement = $scope->toXML($document->firstChild);
@@ -61,8 +61,8 @@ class ScopeTest extends \PHPUnit\Framework\TestCase
     public function testMarshallingRegexp()
     {
         $scope = new Scope();
-        $scope->scope = "^(.*\.)?example\.edu$";
-        $scope->regexp = TRUE;
+        $scope->setScope("^(.*\.)?example\.edu$");
+        $scope->setIsRegexpScope(true);
 
         $document = DOMDocumentFactory::fromString('<root />');
         $scopeElement = $scope->toXML($document->firstChild);
@@ -88,8 +88,8 @@ XML
         );
         $scope = new Scope($document->firstChild);
 
-        $this->assertEquals('example.org', $scope->scope);
-        $this->assertFalse($scope->regexp);
+        $this->assertEquals('example.org', $scope->getScope());
+        $this->assertFalse($scope->isRegexpScope());
     }
 
     /**
@@ -105,8 +105,8 @@ XML
         );
         $scope = new Scope($document->firstChild);
 
-        $this->assertEquals('example.org', $scope->scope);
-        $this->assertFalse($scope->regexp);
+        $this->assertEquals('example.org', $scope->getScope());
+        $this->assertFalse($scope->isRegexpScope());
     }
 
     /**
@@ -121,7 +121,7 @@ XML
         );
         $scope = new Scope($document->firstChild);
 
-        $this->assertEquals('^(.*|)example.edu$', $scope->scope);
-        $this->assertTrue($scope->regexp);
+        $this->assertEquals('^(.*|)example.edu$', $scope->getScope());
+        $this->assertTrue($scope->isRegexpScope());
     }
 }

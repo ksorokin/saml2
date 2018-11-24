@@ -83,7 +83,7 @@ XML
         $attribute = new Attribute();
         $attribute->Name = 'TheName';
         $scope = new Scope();
-        $scope->scope = "scope";
+        $scope->setScope("scope");
 
         Extensions::addList($this->testElement, [$attribute, $scope]);
 

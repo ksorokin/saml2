@@ -22,7 +22,7 @@ final class X509Data
      *
      * @var (\SAML2\XML\Chunk|\SAML2\XML\ds\X509Certificate)[]
      */
-    public $data = [];
+    private $data = [];
 
     /**
      * Initialize a X509Data.
@@ -53,6 +53,34 @@ final class X509Data
                     break;
             }
         }
+    }
+
+    /**
+     * Collect the value of the data-property
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set the value of the data-property
+     * @param array $data
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Add the value to the data-property
+     * @param \SAML2\XML\Chunk|\SAML2\XML\ds\X509Certificate $data
+     */
+    public function addData($data)
+    {
+        assert($data instanceof \SAML2\XML\Chunk || $data instanceof \SAML2\XML\ds\X509Certificate);
+        $this->data[] = $data;
     }
 
     /**

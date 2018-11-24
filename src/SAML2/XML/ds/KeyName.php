@@ -19,7 +19,7 @@ final class KeyName
      *
      * @var string
      */
-    public $name;
+    private $name;
 
     /**
      * Initialize a KeyName element.
@@ -34,6 +34,25 @@ final class KeyName
 
         $this->name = $xml->textContent;
     }
+
+    /**
+     * Collect the value of the name-property
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of the name-property
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
 
     /**
      * Convert this KeyName element to XML.

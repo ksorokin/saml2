@@ -20,37 +20,37 @@ final class AffiliationDescriptor extends SignedElementHelper
      *
      * @var string
      */
-    public $affiliationOwnerID;
+    private $affiliationOwnerID;
 
     /**
      * The ID of this element.
      *
      * @var string|null
      */
-    public $ID;
+    private $ID;
 
     /**
      * How long this element is valid, as a unix timestamp.
      *
      * @var int|null
      */
-    public $validUntil;
+    private $validUntil;
 
     /**
      * The length of time this element can be cached, as string.
      *
      * @var string|null
      */
-    public $cacheDuration;
+    private $cacheDuration;
 
     /**
      * Extensions on this element.
      *
      * Array of extension elements.
      *
-     * @var array
+     * @var \SAML2\XML\Chunk[]
      */
-    public $Extensions = [];
+    private $Extensions = [];
 
     /**
      * The AffiliateMember(s).
@@ -59,7 +59,7 @@ final class AffiliationDescriptor extends SignedElementHelper
      *
      * @var array
      */
-    public $AffiliateMember = [];
+    private $AffiliateMember = [];
 
     /**
      * KeyDescriptor elements.
@@ -68,7 +68,7 @@ final class AffiliationDescriptor extends SignedElementHelper
      *
      * @var \SAML2\XML\md\KeyDescriptor[]
      */
-    public $KeyDescriptor = [];
+    private $KeyDescriptor = [];
 
     /**
      * Initialize a AffiliationDescriptor.
@@ -111,6 +111,132 @@ final class AffiliationDescriptor extends SignedElementHelper
         foreach (Utils::xpQuery($xml, './saml_metadata:KeyDescriptor') as $kd) {
             $this->KeyDescriptor[] = new KeyDescriptor($kd);
         }
+    }
+
+    /**
+     * Collect the value of the affiliationOwnerId-property
+     * @return string
+     */
+    public function getAffiliationOwnerID()
+    {
+        return $this->affiliationOwnerID;
+    }
+
+    /**
+     * Set the value of the affiliationOwnerId-property
+     * @param string $affiliationOwnerId
+     */
+    public function setAffiliationOwnerID(string $affiliationOwnerId)
+    {
+        $this->affiliationOwnerID = $affiliationOwnerId;
+    }
+
+    /**
+     * Collect the value of the ID-property
+     * @return string|null
+     */
+    public function getID()
+    {
+        return $this->ID;
+    }
+
+    /**
+     * Set the value of the ID-property
+     * @param string|null $Id
+     */
+    public function setID(string $Id = null)
+    {
+        $this->ID = $Id;
+    }
+
+    /**
+     * Collect the value of the validUntil-property
+     * @return int|null
+     */
+    public function getValidUntil()
+    {
+        return $this->validUntil;
+    }
+
+    /**
+     * Set the value of the validUntil-property
+     * @param int|null $validUntil
+     */
+    public function setValidUntil(int $validUntil = null)
+    {
+        $this->validUntil = $validUntil;
+    }
+
+    /**
+     * Collect the value of the cacheDuration-property
+     * @return string|null
+     */
+    public function getCacheDuration()
+    {
+        return $this->cacheDuration;
+    }
+
+    /**
+     * Set the value of the cacheDuration-property
+     * @param string|null $cacheDuration
+     */
+    public function setCacheDuration(string $cacheDuration = null)
+    {
+        $this->cacheDuration = $cacheDuration;
+    }
+
+    /**
+     * Collect the value of the Extensions-property
+     * @return \SAML2\XML\Chunk[]
+     */
+    public function getExtensions()
+    {
+        return $this->Extensions;
+    }
+
+    /**
+     * Set the value of the Extensions-property
+     * @param array $extensions
+     */
+    public function setExtensions(array $extensions)
+    {
+        $this->Extensions = $extensions;
+    }
+
+    /**
+     * Collect the value of the AffiliateMember-property
+     * @return array
+     */
+    public function getAffiliateMember()
+    {
+        return $this->AffiliateMember;
+    }
+
+    /**
+     * Set the value of the AffiliateMember-property
+     * @param array $affiliateMember
+     */
+    public function setAffiliateMember(array $affiliateMember)
+    {
+        $this->AffiliateMember = $affiliateMember;
+    }
+
+    /**
+     * Collect the value of the KeyDescriptor-property
+     * @return KeyDescriptor[]
+     */
+    public function getKeyDescriptor()
+    {
+        return $this->KeyDescriptor;
+    }
+
+    /**
+     * Set the value of the KeyDescriptor-property
+     * @param array $keyDescriptor
+     */
+    public function setKeyDescriptor(array $keyDescriptor)
+    {
+        $this->KeyDescriptor = $keyDescriptor;
     }
 
     /**

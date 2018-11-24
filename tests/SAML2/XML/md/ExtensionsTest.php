@@ -131,9 +131,9 @@ XML
         $r = $document->createElement('root');
         $document->appendChild($r);
         $scope = new Scope();
-        $scope->scope = 'SomeScope';
+        $scope->setScope('SomeScope');
         $digest = new DigestMethod();
-        $digest->Algorithm = 'SomeAlgorithm';
+        $digest->setAlgorithm('SomeAlgorithm');
         $extensions = [
             $scope,
             $digest,

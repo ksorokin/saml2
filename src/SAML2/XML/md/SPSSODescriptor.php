@@ -18,14 +18,14 @@ final class SPSSODescriptor extends SSODescriptorType
      *
      * @var bool|null
      */
-    public $AuthnRequestsSigned = null;
+    private $AuthnRequestsSigned = null;
 
     /**
      * Whether this SP wants the Assertion elements to be signed.
      *
      * @var bool|null
      */
-    public $WantAssertionsSigned = null;
+    private $WantAssertionsSigned = null;
 
     /**
      * List of AssertionConsumerService endpoints for this SP.
@@ -34,7 +34,7 @@ final class SPSSODescriptor extends SSODescriptorType
      *
      * @var \SAML2\XML\md\IndexedEndpointType[]
      */
-    public $AssertionConsumerService = [];
+    private $AssertionConsumerService = [];
 
     /**
      * List of AttributeConsumingService descriptors for this SP.
@@ -43,7 +43,7 @@ final class SPSSODescriptor extends SSODescriptorType
      *
      * @var \SAML2\XML\md\AttributeConsumingService[]
      */
-    public $AttributeConsumingService = [];
+    private $AttributeConsumingService = [];
 
     /**
      * Initialize a SPSSODescriptor.
@@ -69,6 +69,97 @@ final class SPSSODescriptor extends SSODescriptorType
             $this->AttributeConsumingService[] = new AttributeConsumingService($acs);
         }
     }
+
+    /**
+     * Collect the value of the AuthnRequestsSigned-property
+     * @return bool|null
+     */
+    public function getAuthnRequestsSigned()
+    {
+        return $this->AuthnRequestsSigned;
+    }
+
+    /**
+     * Set the value of the AuthnRequestsSigned-property
+     * @param bool|null $flag
+     */
+    public function setAuthnRequestsSigned(bool $flag = null)
+    {
+        $this->AuthnRequestsSigned = $flag;
+    }
+
+    /**
+     * Collect the value of the WantAssertionsSigned-property
+     * @return bool|null
+     */
+    public function getWantAssertionsSigned()
+    {
+        return $this->WantAssertionsSigned;
+    }
+
+    /**
+     * Set the value of the WantAssertionsSigned-property
+     * @param bool|null $flag
+     */
+    public function setWantAssertionsSigned(bool $flag = null)
+    {
+        $this->WantAssertionsSigned = $flag;
+    }
+
+    /**
+     * Collect the value of the AssertionConsumerService-property
+     * @return array
+     */
+    public function getAssertionConsumerService()
+    {
+        return $this->AssertionConsumerService;
+    }
+
+    /**
+     * Set the value of the AssertionConsumerService-property
+     * @param array $acs
+     */
+    public function setAssertionConsumerService(array $acs)
+    {
+        $this->AssertionConsumerService = $acs;
+    }
+
+    /**
+     * Add the value to the AssertionConsumerService-property
+     * @param \SAML2\XML\md\IndexedEndpointType $acs
+     */
+    public function addAssertionConsumerService(IndexedEndpointType $acs)
+    {
+        $this->AssertionConsumerService[] = $acs;
+    }
+
+    /**
+     * Collect the value of the AttributeConsumingService-property
+     * @return array
+     */
+    public function getAttributeConsumingService()
+    {
+        return $this->AttributeConsumingService;
+    }
+
+    /**
+     * Add the value to the AttributeConsumingService-property
+     * @param \SAML2\XML\md\AttributeConsumingService $acs
+     */
+    public function addAttributeConsumingService(AttributeConsumingService $acs)
+    {
+        $this->AttributeConsumingService[] = $acs;
+    }
+
+    /**
+     * Set the value of the AttributeConsumingService-property
+     * @param array $acs
+     */
+    public function setAttributeConsumingService(array $acs)
+    {
+        $this->AttributeConsumingService = $acs;
+    }
+
 
     /**
      * Add this SPSSODescriptor to an EntityDescriptor.

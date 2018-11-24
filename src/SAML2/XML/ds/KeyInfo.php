@@ -19,7 +19,7 @@ final class KeyInfo
      *
      * @var string|null
      */
-    public $Id = null;
+    private $Id = null;
 
     /**
      * The various key information elements.
@@ -29,7 +29,7 @@ final class KeyInfo
      *
      * @var (\SAML2\XML\Chunk|\SAML2\XML\ds\KeyName|\SAML2\XML\ds\X509Data)[]
      */
-    public $info = [];
+    private $info = [];
 
     /**
      * Initialize a KeyInfo element.
@@ -67,6 +67,53 @@ final class KeyInfo
                     break;
             }
         }
+    }
+
+    /**
+     * Collect the value of the Id-property
+     * @return string|null
+     */
+    public function getId()
+    {
+        return $this->Id;
+    }
+
+    /**
+     * Set the value of the Id-property
+     * @param string|null $id
+     */
+    public function setId(string $id = null)
+    {
+        $this->Id = $id;
+    }
+
+
+    /**
+     * Collect the value of the info-property
+     * @return array
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    /**
+     * Set the value of the info-property
+     * @param array $info
+     */
+    public function setInfo(array $info)
+    {
+        $this->info = $info;
+    }
+
+    /**
+     * Add the value to the info-property
+     * @param \SAML2\XML\Chunk|\SAML2\XML\ds\KeyName|\SAML2\XML\ds\X509Data $info
+     */
+    public function addInfo($info)
+    {
+        assert($info instanceof Chunk || $info instanceof KeyName || $info instanceof X509Data);
+        $this->info[] = $info;
     }
 
     /**

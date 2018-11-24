@@ -19,14 +19,14 @@ final class RegistrationInfo
      *
      * @var string
      */
-    public $registrationAuthority;
+    private $registrationAuthority;
 
     /**
      * The registration timestamp for the metadata, as a UNIX timestamp.
      *
      * @var int|null
      */
-    public $registrationInstant;
+    private $registrationInstant;
 
     /**
      * Link to registration policy for this metadata.
@@ -35,7 +35,7 @@ final class RegistrationInfo
      *
      * @var array
      */
-    public $RegistrationPolicy = [];
+    private $RegistrationPolicy = [];
 
     /**
      * Create/parse a mdrpi:RegistrationInfo element.
@@ -59,6 +59,60 @@ final class RegistrationInfo
         }
 
         $this->RegistrationPolicy = Utils::extractLocalizedStrings($xml, Common::NS_MDRPI, 'RegistrationPolicy');
+    }
+
+    /**
+     * Collect the value of the RegistrationAuthority-property
+     * @return string
+     */
+    public function getRegistrationAuthority()
+    {
+        return $this->registrationAuthority;
+    }
+
+    /**
+     * Set the value of the registrationAuthority-property
+     * @param string $registrationAuthority
+     */
+    public function setRegistrationAuthority(string $registrationAuthority)
+    {
+        $this->registrationAuthority = $registrationAuthority;
+    }
+
+    /**
+     * Collect the value of the registrationInstant-property
+     * @return int|null
+     */
+    public function getRegistrationInstant()
+    {
+        return $this->registrationInstant;
+    }
+
+    /**
+     * Set the value of the registrationInstant-property
+     * @param int|null $registrationInstant
+     */
+    public function setRegistrationInstant(int $registrationInstant = null)
+    {
+        $this->registrationInstant = $registrationInstant;
+    }
+
+    /**
+     * Collect the value of the RegistrationPolicy-property
+     * @return array
+     */
+    public function getRegistrationPolicy()
+    {
+        return $this->RegistrationPolicy;
+    }
+
+    /**
+     * Set the value of the RegistrationPolicy-property
+     * @param array $registrationPolicy
+     */
+    public function setRegistrationPolicy(array $registrationPolicy)
+    {
+        $this->RegistrationPolicy = $registrationPolicy;
     }
 
     /**

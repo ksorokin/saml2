@@ -19,7 +19,7 @@ final class X509Certificate
      *
      * @var string
      */
-    public $certificate;
+    private $certificate;
 
     /**
      * Initialize an X509Certificate element.
@@ -34,6 +34,26 @@ final class X509Certificate
 
         $this->certificate = $xml->textContent;
     }
+
+
+    /**
+     * Collect the value of the certificate-property
+     * @return string
+     */
+    public function getCertificate()
+    {
+        return $this->certificate;
+    }
+
+    /**
+     * Set the value of the certificate-property
+     * @param string $certificate
+     */
+    public function setCertificate(string $certificate)
+    {
+        $this->certificate = $certificate;
+    }
+
 
     /**
      * Convert this X509Certificate element to XML.

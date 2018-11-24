@@ -18,7 +18,7 @@ final class SigningMethod
      *
      * @var string
      */
-    public $Algorithm;
+    private $Algorithm;
 
 
     /**
@@ -27,7 +27,7 @@ final class SigningMethod
      *
      * @var int|null
      */
-    public $MinKeySize;
+    private $MinKeySize;
 
 
     /**
@@ -36,8 +36,63 @@ final class SigningMethod
      *
      * @var int|null
      */
-    public $MaxKeySize;
+    private $MaxKeySize;
 
+
+    /**
+     * Collect the value of the Algorithm-property
+     * @return string
+     */
+    public function getAlgorithm()
+    {
+        return $this->Algorithm;
+    }
+
+    /**
+     * Set the value of the Algorithm-property
+     * @param string $algorithm
+     */
+    public function setAlgorithm(string $algorithm)
+    {
+        $this->Algorithm = $algorithm;
+    }
+
+
+    /**
+     * Collect the value of the MinKeySize-property
+     * @return int|null
+     */
+    public function getMinKeySize()
+    {
+        return $this->MinKeySize;
+    }
+
+    /**
+     * Set the value of the MinKeySize-property
+     * @param int|null $minKeySize
+     */
+    public function setMinKeySize(int $minKeySize = null)
+    {
+        $this->MinKeySize = $minKeySize;
+    }
+
+    /**
+     * Collect the value of the MaxKeySize-property
+     * @return int|null
+     */
+    public function getMaxKeySize()
+    {
+        return $this->MaxKeySize;
+    }
+
+    /**
+     * Set the value of the MaxKeySize-property
+     * @param int|null $maxKeySize
+     */
+    public function setMaxKeySize(int $maxKeySize = null)
+    {
+        $this->MaxKeySize = $maxKeySize;
+    }
 
     /**
      * Create/parse an alg:SigningMethod element.

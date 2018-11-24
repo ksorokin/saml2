@@ -18,14 +18,14 @@ final class IndexedEndpointType extends EndpointType
      *
      * @var int
      */
-    public $index;
+    private $index;
 
     /**
      * Whether this endpoint is the default.
      *
      * @var bool|null
      */
-    public $isDefault = null;
+    private $isDefault = null;
 
     /**
      * Initialize an IndexedEndpointType.
@@ -48,6 +48,43 @@ final class IndexedEndpointType extends EndpointType
 
         $this->isDefault = Utils::parseBoolean($xml, 'isDefault', null);
     }
+
+    /**
+     * Collect the value of the index-property
+     * @return int
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * Set the value of the index-property
+     * @param int $index
+     */
+    public function setIndex(int $index)
+    {
+        $this->index = $index;
+    }
+
+    /**
+     * Collect the value of the isDefault-property
+     * @return bool|null
+     */
+    public function getIsDefault()
+    {
+        return $this->isDefault;
+    }
+
+    /**
+     * Set the value of the isDefault-property
+     * @param bool|null $flag
+     */
+    public function setIsDefault(bool $flag = null)
+    {
+        $this->isDefault = $flag;
+    }
+
 
     /**
      * Add this endpoint to an XML element.
