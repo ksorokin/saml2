@@ -42,7 +42,7 @@ final class Container extends AbstractContainer
      */
     public function debugMessage(\DOMElement $message, string $type)
     {
-        \SimpleSAML\Utils\XML::debugMessage($message, $type);
+        \SimpleSAML\Utils\XML::debugSAMLMessage($message, $type);
     }
 
     /**
