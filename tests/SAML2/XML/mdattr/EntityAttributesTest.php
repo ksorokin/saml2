@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SAML2\Tests\XML\mdattr;
 
 use SAML2\DOMDocumentFactory;
+use SAML2\XML\Chunk;
 use SAML2\XML\saml\Attribute;
 use SAML2\XML\saml\AttributeValue;
 use SAML2\XML\mdattr\EntityAttributes;
@@ -68,11 +69,11 @@ XML
         $entityAttributes = new EntityAttributes($document->firstChild);
         $this->assertCount(5, $entityAttributes->children);
 
-        $this->assertInstanceOf(\SAML2\XML\Chunk::class, $entityAttributes->children[0]);
-        $this->assertInstanceOf(\SAML2\XML\saml\Attribute::class, $entityAttributes->children[1]);
-        $this->assertInstanceOf(\SAML2\XML\Chunk::class, $entityAttributes->children[2]);
-        $this->assertInstanceOf(\SAML2\XML\saml\Attribute::class, $entityAttributes->children[3]);
-        $this->assertInstanceOf(\SAML2\XML\saml\Attribute::class, $entityAttributes->children[4]);
+        $this->assertInstanceOf(Chunk::class, $entityAttributes->children[0]);
+        $this->assertInstanceOf(Attribute::class, $entityAttributes->children[1]);
+        $this->assertInstanceOf(Chunk::class, $entityAttributes->children[2]);
+        $this->assertInstanceOf(Attribute::class, $entityAttributes->children[3]);
+        $this->assertInstanceOf(Attribute::class, $entityAttributes->children[4]);
 
         $this->assertEquals('Assertion', $entityAttributes->children[0]->localName);
         $this->assertEquals('1984-08-26T10:01:30.000Z', $entityAttributes->children[0]->xml->getAttribute('IssueInstant'));

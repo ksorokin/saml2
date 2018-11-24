@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SAML2\Tests\Assertion\Validation\ConstraintValidator;
 
+use SAML2\XML\saml\SubjectConfirmation;
 use SAML2\Assertion\Validation\ConstraintValidator\SubjectConfirmationMethod;
 use SAML2\Assertion\Validation\Result;
 use SAML2\Constants;
@@ -17,7 +18,7 @@ class SubjectConfirmationMethodTest extends \Mockery\Adapter\Phpunit\MockeryTest
 
     public function setUp()
     {
-        $this->subjectConfirmation = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmation::class);
+        $this->subjectConfirmation = \Mockery::mock(SubjectConfirmation::class);
     }
 
     /**

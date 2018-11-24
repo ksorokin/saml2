@@ -12,7 +12,7 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
  *
  * @package SimpleSAMLphp
  */
-class EncryptedAssertion
+final class EncryptedAssertion
 {
     /**
      * The current encrypted assertion.
@@ -77,7 +77,7 @@ class EncryptedAssertion
                 break;
 
             default:
-                throw new \Exception('Unknown key type for encryption: ' . $key->type);
+                throw new \Exception('Unknown key type for encryption: '.$key->type);
         }
 
         $this->encryptedData = $enc->encryptNode($symmetricKey);
@@ -114,7 +114,7 @@ class EncryptedAssertion
             $document = $parentElement->ownerDocument;
         }
 
-        $root = $document->createElementNS(Constants::NS_SAML, 'saml:' . 'EncryptedAssertion');
+        $root = $document->createElementNS(Constants::NS_SAML, 'saml:'.'EncryptedAssertion');
         $parentElement->appendChild($root);
 
         $root->appendChild($document->importNode($this->encryptedData, true));

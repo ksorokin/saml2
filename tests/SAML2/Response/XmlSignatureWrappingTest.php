@@ -10,6 +10,7 @@ use SAML2\Configuration\IdentityProvider;
 use SAML2\DOMDocumentFactory;
 use SAML2\Signature\Validator;
 use SAML2\Utilities\Certificate;
+use Psr\Log\NullLogger;
 
 class XmlSignatureWrappingTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
@@ -25,7 +26,7 @@ class XmlSignatureWrappingTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 
     public function setUp()
     {
-        $this->signatureValidator = new Validator(new \Psr\Log\NullLogger());
+        $this->signatureValidator = new Validator(new NullLogger());
 
         $pattern = Certificate::CERTIFICATE_PATTERN;
         preg_match($pattern, CertificatesMock::PUBLIC_KEY_PEM, $matches);

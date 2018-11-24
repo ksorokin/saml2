@@ -597,7 +597,7 @@ AUTHNREQUEST;
         $request = new AuthnRequest();
         $request->setIssuer($issuer);
         $request->setDestination('https://tiqr.example.org/idp/profile/saml2/Redirect/SSO');
-        $request->setIssueInstant( Utils::xsDateTimeToTimestamp('2004-12-05T09:21:59Z'));
+        $request->setIssueInstant(Utils::xsDateTimeToTimestamp('2004-12-05T09:21:59Z'));
 
         $nameIdPolicy = ["Format" => "urn:oasis:names:tc:SAML:2.0:nameid-format:transient"];
         $request->setNameIDPolicy($nameIdPolicy);
@@ -840,7 +840,7 @@ AUTHNREQUEST;
         $request = new AuthnRequest();
         $request->setIssuer($issuer);
         $request->setDestination('https://tiqr.example.org/idp/profile/saml2/Redirect/SSO');
-        $request->setIssueInstant( Utils::xsDateTimeToTimestamp('2004-12-05T09:21:59Z'));
+        $request->setIssueInstant(Utils::xsDateTimeToTimestamp('2004-12-05T09:21:59Z'));
 
         $request->setIsPassive(true);
 

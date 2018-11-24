@@ -20,7 +20,7 @@ use SAML2\Signature\Validator;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - due to specific exceptions
  */
-class Processor
+final class Processor
 {
     /**
      * @var \Psr\Log\LoggerInterface
@@ -67,7 +67,7 @@ class Processor
      * @param \SAML2\Configuration\Destination      $currentDestination
      * @param \SAML2\Response                       $response
      *
-     * @return \SAML2\Assertion[] Collection (\SAML2\Utilities\ArrayCollection) of \SAML2\Assertion objects
+     * @return \SAML2\Utilities\ArrayCollection Collection (\SAML2\Utilities\ArrayCollection) of \SAML2\Assertion objects
      */
     public function process(
         ServiceProvider $serviceProviderConfiguration,
@@ -137,7 +137,7 @@ class Processor
     /**
      * @param \SAML2\Response $response
      *
-     * @return \SAML2\Assertion[]
+     * @return \SAML2\Utilities\ArrayCollection
      */
     private function processAssertions(Response $response)
     {

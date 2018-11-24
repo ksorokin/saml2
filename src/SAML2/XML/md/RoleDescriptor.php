@@ -118,7 +118,7 @@ class RoleDescriptor extends SignedElementHelper
         }
 
         if (!$xml->hasAttribute('protocolSupportEnumeration')) {
-            throw new \Exception('Missing protocolSupportEnumeration attribute on ' . $xml->localName);
+            throw new \Exception('Missing protocolSupportEnumeration attribute on '.$xml->localName);
         }
         $this->protocolSupportEnumeration = preg_split('/[\s]+/', $xml->getAttribute('protocolSupportEnumeration'));
 
@@ -140,7 +140,7 @@ class RoleDescriptor extends SignedElementHelper
         }
 
         foreach (Utils::xpQuery($xml, './saml_metadata:ContactPerson') as $cp) {
-            $this->contactPersons[] = new ContactPerson($cp);
+            $this->ContactPerson[] = new ContactPerson($cp);
         }
     }
 

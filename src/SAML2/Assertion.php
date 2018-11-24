@@ -6,10 +6,11 @@ namespace SAML2;
 
 use RobRichards\XMLSecLibs\XMLSecEnc;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
-use SAML2\Exception\RuntimeException;
 use SAML2\Utilities\Temporal;
 use SAML2\XML\Chunk;
 use SAML2\XML\saml\SubjectConfirmation;
+use SAML2\XML\saml\Issuer;
+use SAML2\XML\saml\NameID;
 
 /**
  * Class representing a SAML 2 assertion.
@@ -76,7 +77,7 @@ class Assertion implements SignedElement
      */
     private $encryptionKey;
 
-     /**
+    /**
      * The earliest time this assertion is valid, as an UNIX timestamp.
      *
      * @var int
@@ -146,7 +147,7 @@ class Assertion implements SignedElement
      *
      * The URI reference MAY directly resolve into an XML document containing the referenced declaration.
      *
-     * @var \SAML2\XML\Chunk
+     * @var string|null
      */
     private $authnContextDeclRef;
 
@@ -229,7 +230,7 @@ class Assertion implements SignedElement
      * Boolean that indicates if attributes are encrypted in the
      * assertion or not.
      *
-     * @var boolean
+     * @var bool
      */
     private $requiredEncAttributes;
 
@@ -280,7 +281,7 @@ class Assertion implements SignedElement
 
         if ($xml->getAttribute('Version') !== '2.0') {
             /* Currently a very strict check. */
-            throw new \Exception('Unsupported version: ' . $xml->getAttribute('Version'));
+            throw new \Exception('Unsupported version: '.$xml->getAttribute('Version'));
         }
 
         $this->issueInstant = Utils::xsDateTimeToTimestamp($xml->getAttribute('IssueInstant'));
@@ -289,7 +290,7 @@ class Assertion implements SignedElement
         if (empty($issuer)) {
             throw new \Exception('Missing <saml:Issuer> in assertion.');
         }
-        $this->issuer = new XML\saml\Issuer($issuer[0]);
+        $this->issuer = new Issuer($issuer[0]);
         if ($this->issuer->getFormat() === Constants::NAMEID_ENTITY) {
             $this->issuer = $this->issuer->getValue();
         }
@@ -332,7 +333,7 @@ class Assertion implements SignedElement
                 /* The NameID element is encrypted. */
                 $this->encryptedNameId = $nameId;
             } else {
-                $this->nameId = new XML\saml\NameID($nameId);
+                $this->nameId = new NameID($nameId);
             }
         }
 
@@ -382,7 +383,7 @@ class Assertion implements SignedElement
                 continue;
             }
             if ($node->namespaceURI !== Constants::NS_SAML) {
-                throw new \Exception('Unknown namespace of condition: ' . var_export($node->namespaceURI, true));
+                throw new \Exception('Unknown namespace of condition: '.var_export($node->namespaceURI, true));
             }
             switch ($node->localName) {
                 case 'AudienceRestriction':
@@ -405,7 +406,7 @@ class Assertion implements SignedElement
                     /* Currently ignored. */
                     break;
                 default:
-                    throw new \Exception('Unknown condition: ' . var_export($node->localName, true));
+                    throw new \Exception('Unknown condition: '.var_export($node->localName, true));
             }
         }
     }
@@ -557,11 +558,11 @@ class Assertion implements SignedElement
                 $eptiNameId = Utils::xpQuery($eptiAttributeValue, './saml_assertion:NameID');
 
                 if (count($eptiNameId) === 1) {
-                    $this->attributes[$attributeName][] = new XML\saml\NameID($eptiNameId[0]);
+                    $this->attributes[$attributeName][] = new NameID($eptiNameId[0]);
                 } else {
                     /* Fall back for legacy IdPs sending string value (e.g. SSP < 1.15) */
                     Utils::getContainer()->getLogger()->warning(sprintf("Attribute %s (EPTI) value %d is not an XML NameId", $attributeName, $index));
-                    $nameId = new XML\saml\NameID();
+                    $nameId = new NameID();
                     $nameId->setValue($eptiAttributeValue->textContent);
                     $this->attributes[$attributeName][] = $nameId;
                 }
@@ -592,7 +593,7 @@ class Assertion implements SignedElement
             }
             
             if ($type === 'xs:integer') {
-                $this->attributes[$attributeName][] = (int)$value->textContent;
+                $this->attributes[$attributeName][] = intval($value->textContent);
             } else {
                 $this->attributes[$attributeName][] = trim($value->textContent);
             }
@@ -640,11 +641,11 @@ class Assertion implements SignedElement
      * signature validation fails.
      *
      * @param  XMLSecurityKey $key The key we should check against.
-     * @return boolean        true if successful, false if it is unsigned.
+     * @return bool        true if successful, false if it is unsigned.
      */
     public function validate(XMLSecurityKey $key)
     {
-        assert($key->type === \RobRichards\XMLSecLibs\XMLSecurityKey::RSA_SHA256);
+        assert($key->type === XMLSecurityKey::RSA_SHA256);
 
         if ($this->signatureData === null) {
             return false;
@@ -672,8 +673,6 @@ class Assertion implements SignedElement
      */
     public function setId(string $id)
     {
-        assert(is_string($id));
-
         $this->id = $id;
     }
 
@@ -694,8 +693,6 @@ class Assertion implements SignedElement
      */
     public function setIssueInstant(int $issueInstant)
     {
-        assert(is_int($issueInstant));
-
         $this->issueInstant = $issueInstant;
     }
 
@@ -714,7 +711,7 @@ class Assertion implements SignedElement
      *
      * @param \SAML2\XML\saml\Issuer $issuer The new issuer of this assertion.
      */
-    public function setIssuer(\SAML2\XML\saml\Issuer $issuer)
+    public function setIssuer(Issuer $issuer)
     {
         $this->issuer = $issuer;
     }
@@ -741,7 +738,7 @@ class Assertion implements SignedElement
      *
      * @param \SAML2\XML\saml\NameID|null $nameId The name identifier of the assertion.
      */
-    public function setNameId(\SAML2\XML\saml\NameID $nameId = null)
+    public function setNameId(NameID $nameId = null)
     {
         $this->nameId = $nameId;
     }
@@ -749,7 +746,7 @@ class Assertion implements SignedElement
     /**
      * Check whether the NameId is encrypted.
      *
-     * @return true if the NameId is encrypted, false if not.
+     * @return bool True if the NameId is encrypted, false if not.
      */
     public function isNameIdEncrypted()
     {
@@ -803,7 +800,7 @@ class Assertion implements SignedElement
 
         $nameId = Utils::decryptElement($this->encryptedNameId, $key, $blacklist);
         Utils::getContainer()->debugMessage($nameId, 'decrypt');
-        $this->nameId = new XML\saml\NameID($nameId);
+        $this->nameId = new NameID($nameId);
 
         $this->encryptedNameId = null;
     }
@@ -921,7 +918,7 @@ class Assertion implements SignedElement
     /**
      * Set $EncryptedAttributes if attributes will send encrypted
      *
-     * @param boolean $ea true to encrypt attributes in the assertion.
+     * @param bool $ea true to encrypt attributes in the assertion.
      */
     public function setEncryptedAttributes(bool $ea)
     {
@@ -1100,7 +1097,7 @@ class Assertion implements SignedElement
      *
      * The URI reference MAY directly resolve into an XML document containing the referenced declaration.
      *
-     * @return string
+     * @return string|null
      */
     public function getAuthnContextDeclRef()
     {
@@ -1307,7 +1304,7 @@ class Assertion implements SignedElement
             $document = $parentElement->ownerDocument;
         }
 
-        $root = $document->createElementNS(Constants::NS_SAML, 'saml:' . 'Assertion');
+        $root = $document->createElementNS(Constants::NS_SAML, 'saml:'.'Assertion');
         $parentElement->appendChild($root);
 
         /* Ugly hack to add another namespace declaration to the root element. */
@@ -1324,7 +1321,7 @@ class Assertion implements SignedElement
 
         if (is_string($this->issuer)) {
             $issuer = Utils::addString($root, Constants::NS_SAML, 'saml:Issuer', $this->issuer);
-        } elseif ($this->issuer instanceof XML\saml\Issuer) {
+        } elseif ($this->issuer instanceof Issuer) {
             $issuer = $this->issuer->toXML($root);
         }
 
@@ -1363,7 +1360,7 @@ class Assertion implements SignedElement
         if ($this->encryptedNameId === null) {
             $this->nameId->toXML($subject);
         } else {
-            $eid = $subject->ownerDocument->createElementNS(Constants::NS_SAML, 'saml:' . 'EncryptedID');
+            $eid = $subject->ownerDocument->createElementNS(Constants::NS_SAML, 'saml:'.'EncryptedID');
             $subject->appendChild($eid);
             $eid->appendChild($subject->ownerDocument->importNode($this->encryptedNameId, true));
         }
@@ -1498,7 +1495,7 @@ class Assertion implements SignedElement
                 foreach ($values as $eptiValue) {
                     $attributeValue = $document->createElementNS(Constants::NS_SAML, 'saml:AttributeValue');
                     $attribute->appendChild($attributeValue);
-                    if ($eptiValue instanceof XML\saml\NameID) {
+                    if ($eptiValue instanceof NameID) {
                         $eptiValue->toXML($attributeValue);
                     } elseif ($eptiValue instanceof \DOMNodeList) {
                         $node = $root->ownerDocument->importNode($eptiValue->item(0), true);
@@ -1515,7 +1512,7 @@ class Assertion implements SignedElement
             if (is_array($this->attributesValueTypes) && array_key_exists($name, $this->attributesValueTypes)) {
                 $valueTypes = $this->attributesValueTypes[$name];
                 if (is_array($valueTypes) && count($valueTypes) != count($values)) {
-                    throw new \Exception('Array of value types and array of values have different size for attribute '. var_export($name, true));
+                    throw new \Exception('Array of value types and array of values have different size for attribute '.var_export($name, true));
                 }
             } else {
                 // if no type(s), default behaviour

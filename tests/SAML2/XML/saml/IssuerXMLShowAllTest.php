@@ -61,7 +61,7 @@ XML
         $issuer->setValue('TheIssuerValue');
         $issuer->Saml2IssuerShowAll=true;
 
-        $output = '<saml:Issuer xmlns:saml="'.\SAML2\Constants::NS_SAML.'" NameQualifier="TheNameQualifier" SPNameQualifier="TheSPNameQualifier" Format="'.Constants::NAMEID_ENTITY.'" SPProvidedID="TheSPProvidedID">'.
+        $output = '<saml:Issuer xmlns:saml="'.Constants::NS_SAML.'" NameQualifier="TheNameQualifier" SPNameQualifier="TheSPNameQualifier" Format="'.Constants::NAMEID_ENTITY.'" SPProvidedID="TheSPProvidedID">'.
                   'TheIssuerValue</saml:Issuer>';
 
         $this->assertXmlStringEqualsXmlString($output, $issuer->__toString());
@@ -76,7 +76,7 @@ XML
         $issuer->setValue('TheIssuerValue');
         $issuer->Saml2IssuerShowAll=false;
         
-        $output = '<saml:Issuer xmlns:saml="'.\SAML2\Constants::NS_SAML.'">TheIssuerValue</saml:Issuer>';
+        $output = '<saml:Issuer xmlns:saml="'.Constants::NS_SAML.'">TheIssuerValue</saml:Issuer>';
         
         $this->assertXmlStringEqualsXmlString($output, $issuer->__toString());
     }
@@ -90,7 +90,7 @@ XML
         $issuer->setValue('TheIssuerValue');
         $issuer->Saml2IssuerShowAll=true;
                 
-        $output = '<saml:Issuer xmlns:saml="'.\SAML2\Constants::NS_SAML.'" NameQualifier="TheNameQualifier" '.
+        $output = '<saml:Issuer xmlns:saml="'.Constants::NS_SAML.'" NameQualifier="TheNameQualifier" '.
             'SPNameQualifier="TheSPNameQualifier" Format="TheFormat" SPProvidedID="TheSPProvidedID">'.
             'TheIssuerValue</saml:Issuer>';
         
@@ -105,7 +105,7 @@ XML
         $issuer->setSPProvidedID('TheSPProvidedID');
         $issuer->setValue('TheIssuerValue');
         
-        $output = '<saml:Issuer xmlns:saml="'.\SAML2\Constants::NS_SAML.'" NameQualifier="TheNameQualifier" '.
+        $output = '<saml:Issuer xmlns:saml="'.Constants::NS_SAML.'" NameQualifier="TheNameQualifier" '.
             'SPNameQualifier="TheSPNameQualifier" Format="TheFormat" SPProvidedID="TheSPProvidedID">'.
             'TheIssuerValue</saml:Issuer>';
         
@@ -120,7 +120,7 @@ XML
         $issuer->setSPProvidedID('TheSPProvidedID');
         $issuer->setValue('TheIssuerValue');
         
-        $output = '<saml:Issuer xmlns:saml="'.\SAML2\Constants::NS_SAML.'">TheIssuerValue</saml:Issuer>';
+        $output = '<saml:Issuer xmlns:saml="'.Constants::NS_SAML.'">TheIssuerValue</saml:Issuer>';
         
         $this->assertXmlStringEqualsXmlString($output, $issuer->__toString());
     }

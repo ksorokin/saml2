@@ -60,7 +60,7 @@ XML
         $nameId->setSPProvidedID('TheSPProvidedID');
         $nameId->setValue('TheNameIDValue');
 
-        $output = '<saml:NameID xmlns:saml="'.\SAML2\Constants::NS_SAML.'" NameQualifier="TheNameQualifier" '.
+        $output = '<saml:NameID xmlns:saml="'.Constants::NS_SAML.'" NameQualifier="TheNameQualifier" '.
                   'SPNameQualifier="TheSPNameQualifier" Format="TheFormat" SPProvidedID="TheSPProvidedID">'.
                   'TheNameIDValue</saml:NameID>';
 

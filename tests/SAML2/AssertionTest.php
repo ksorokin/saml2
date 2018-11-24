@@ -9,6 +9,7 @@ use SAML2\Constants;
 use SAML2\XML\Chunk;
 use SAML2\XML\saml\Issuer;
 use SAML2\XML\saml\NameID;
+use SAML2\XML\saml\SubjectConfirmation;
 use SAML2\DOMDocumentFactory;
 use SAML2\Utils;
 
@@ -520,7 +521,7 @@ XML
         $sc = $assertion->getSubjectConfirmation();
 
         $this->assertCount(1, $sc);
-        $this->assertInstanceOf(\SAML2\XML\saml\SubjectConfirmation::class, $sc[0]);
+        $this->assertInstanceOf(SubjectConfirmation::class, $sc[0]);
         $this->assertEquals('urn:oasis:names:tc:SAML:2.0:cm:bearer', $sc[0]->Method);
         $this->assertEquals('https://example.org/authentication/consume-assertion', $sc[0]->SubjectConfirmationData->Recipient);
         $this->assertEquals(1267796526, $sc[0]->SubjectConfirmationData->NotOnOrAfter);

@@ -9,6 +9,7 @@ use SAML2\Certificate\Key;
 use SAML2\Certificate\KeyLoader;
 use SAML2\Certificate\Exception\InvalidCertificateStructureException;
 use SAML2\Certificate\Exception\NoKeysFoundException;
+use SAML2\Certificate\X509;
 use SAML2\Configuration\CertificateProvider;
 
 class KeyLoaderTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
@@ -70,7 +71,7 @@ class KeyLoaderTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
         $loadedKeys = $this->keyLoader->getKeys();
 
         $this->assertCount(1, $loadedKeys);
-        $this->assertInstanceOf(\SAML2\Certificate\X509::class, $loadedKeys->get(0));
+        $this->assertInstanceOf(X509::class, $loadedKeys->get(0));
     }
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SAML2\Tests\Assertion\Validation\ConstraintValidator;
 
+use SAML2\Assertion;
 use SAML2\Assertion\Validation\ConstraintValidator\NotOnOrAfter;
 use SAML2\Assertion\Validation\Result;
 use SAML2\Tests\ControlledTimeTest;
@@ -24,7 +25,7 @@ class NotOnOrAfterTest extends ControlledTimeTest
     public function setUp()
     {
         parent::setUp();
-        $this->assertion = \Mockery::mock('SAML2\Assertion');
+        $this->assertion = \Mockery::mock(Assertion::class);
     }
 
     /**

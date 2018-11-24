@@ -11,7 +11,7 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
  *
  * @package SimpleSAMLphp
  */
-class HTTPRedirect extends Binding
+final class HTTPRedirect extends Binding
 {
     const DEFLATE = 'urn:oasis:names:tc:SAML:2.0:bindings:URL-Encoding:DEFLATE';
 
@@ -51,21 +51,21 @@ class HTTPRedirect extends Binding
         $msg .= urlencode($msgStr);
 
         if ($relayState !== null) {
-            $msg .= '&RelayState=' . urlencode($relayState);
+            $msg .= '&RelayState='.urlencode($relayState);
         }
 
         if ($key !== null) {
             /* Add the signature. */
-            $msg .= '&SigAlg=' . urlencode($key->type);
+            $msg .= '&SigAlg='.urlencode($key->type);
 
             $signature = $key->signData($msg);
-            $msg .= '&Signature=' . urlencode(base64_encode($signature));
+            $msg .= '&Signature='.urlencode(base64_encode($signature));
         }
 
         if (strpos($destination, '?') === false) {
-            $destination .= '?' . $msg;
+            $destination .= '?'.$msg;
         } else {
-            $destination .= '&' . $msg;
+            $destination .= '&'.$msg;
         }
 
         return $destination;
@@ -81,7 +81,7 @@ class HTTPRedirect extends Binding
     public function send(Message $message)
     {
         $destination = $this->getRedirectURL($message);
-        Utils::getContainer()->getLogger()->debug('Redirect to ' . strlen($destination) . ' byte URL: ' . $destination);
+        Utils::getContainer()->getLogger()->debug('Redirect to '.strlen($destination).' byte URL: '.$destination);
         Utils::getContainer()->redirect($destination);
     }
 
@@ -108,7 +108,7 @@ class HTTPRedirect extends Binding
         }
 
         if (isset($data['SAMLEncoding']) && $data['SAMLEncoding'] !== self::DEFLATE) {
-            throw new \Exception('Unknown SAMLEncoding: ' . var_export($data['SAMLEncoding'], true));
+            throw new \Exception('Unknown SAMLEncoding: '.var_export($data['SAMLEncoding'], true));
         }
 
         $message = base64_decode($message);
@@ -143,7 +143,7 @@ class HTTPRedirect extends Binding
             'Query'     => $data['SignedQuery'],
         ];
 
-        $message->addValidator([get_class($this), 'validateSignature'], $signData);
+        $message->addValidator([self::class, 'validateSignature'], $signData);
 
         return $message;
     }
@@ -183,18 +183,18 @@ class HTTPRedirect extends Binding
             switch ($name) {
                 case 'SAMLRequest':
                 case 'SAMLResponse':
-                    $sigQuery = $name . '=' . $value;
+                    $sigQuery = $name.'='.$value;
                     break;
                 case 'RelayState':
-                    $relayState = '&RelayState=' . $value;
+                    $relayState = '&RelayState='.$value;
                     break;
                 case 'SigAlg':
-                    $sigAlg = '&SigAlg=' . $value;
+                    $sigAlg = '&SigAlg='.$value;
                     break;
             }
         }
 
-        $data['SignedQuery'] = $sigQuery . $relayState . $sigAlg;
+        $data['SignedQuery'] = $sigQuery.$relayState.$sigAlg;
 
         return $data;
     }

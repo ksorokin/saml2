@@ -6,6 +6,9 @@ namespace SAML2\Tests\Assertion\Validation\ConstraintValidator;
 
 use SAML2\Assertion\Validation\Result;
 use SAML2\Assertion\Validation\ConstraintValidator\SubjectConfirmationResponseToMatches;
+use SAML2\XML\saml\SubjectConfirmation;
+use SAML2\XML\saml\SubjectConfirmationData;
+use SAML2\Response;
 
 class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
@@ -27,10 +30,10 @@ class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\
     public function setUp()
     {
         parent::setUp();
-        $this->subjectConfirmation                          = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmation::class);
-        $this->subjectConfirmationData                      = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmationData::class);
+        $this->subjectConfirmation                          = \Mockery::mock(SubjectConfirmation::class);
+        $this->subjectConfirmationData                      = \Mockery::mock(SubjectConfirmationData::class);
         $this->subjectConfirmation->SubjectConfirmationData = $this->subjectConfirmationData;
-        $this->response                                     = \Mockery::mock(\SAML2\Response::class);
+        $this->response                                     = \Mockery::mock(Response::class);
     }
 
     /**
@@ -45,7 +48,7 @@ class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\
         $validator = new SubjectConfirmationResponseToMatches(
             $this->response
         );
-        $result    = new Result();
+        $result = new Result();
 
         $validator->validate($this->subjectConfirmation, $result);
 
@@ -64,7 +67,7 @@ class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\
         $validator = new SubjectConfirmationResponseToMatches(
             $this->response
         );
-        $result    = new Result();
+        $result = new Result();
 
         $validator->validate($this->subjectConfirmation, $result);
 
@@ -83,7 +86,7 @@ class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\
         $validator = new SubjectConfirmationResponseToMatches(
             $this->response
         );
-        $result    = new Result();
+        $result = new Result();
 
         $validator->validate($this->subjectConfirmation, $result);
 
@@ -102,7 +105,7 @@ class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\
         $validator = new SubjectConfirmationResponseToMatches(
             $this->response
         );
-        $result    = new Result();
+        $result = new Result();
 
         $validator->validate($this->subjectConfirmation, $result);
 
@@ -121,7 +124,7 @@ class SubjectConfirmationResponseToMatchesTest extends \Mockery\Adapter\Phpunit\
         $validator = new SubjectConfirmationResponseToMatches(
             $this->response
         );
-        $result    = new Result();
+        $result = new Result();
 
         $validator->validate($this->subjectConfirmation, $result);
 

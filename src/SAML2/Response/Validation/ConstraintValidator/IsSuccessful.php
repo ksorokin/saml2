@@ -9,7 +9,7 @@ use SAML2\Response;
 use SAML2\Response\Validation\ConstraintValidator;
 use SAML2\Response\Validation\Result;
 
-class IsSuccessful implements ConstraintValidator
+final class IsSuccessful implements ConstraintValidator
 {
     /**
      * @param \SAML2\Response $response
@@ -35,8 +35,8 @@ class IsSuccessful implements ConstraintValidator
         return sprintf(
             '%s%s%s',
             $this->truncateStatus($responseStatus['Code']),
-            $responseStatus['SubCode'] ? '/' . $this->truncateStatus($responseStatus['SubCode']) : '',
-            $responseStatus['Message'] ? ' ' . $responseStatus['Message'] : ''
+            $responseStatus['SubCode'] ? '/'.$this->truncateStatus($responseStatus['SubCode']) : '',
+            $responseStatus['Message'] ? ' '.$responseStatus['Message'] : ''
         );
     }
 

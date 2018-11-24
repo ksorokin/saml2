@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SAML2\Tests\Certificate;
 
 use SAML2\Certificate\KeyCollection;
+use SAML2\Exception\InvalidArgumentException;
 
 class KeyCollectionTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +17,7 @@ class KeyCollectionTest extends \PHPUnit\Framework\TestCase
     public function testKeyCollectionAddWrongType()
     {
         $kc = new KeyCollection();
-        $this->expectException(\SAML2\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $kc->add("not a key, just a string");
     }
 }

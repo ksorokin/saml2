@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SAML2\Tests\Assertion\Validation\ConstraintValidator\NotBefore;
 
+use SAML2\Assertion;
 use SAML2\Assertion\Validation\ConstraintValidator\NotBefore;
 use SAML2\Assertion\Validation\Result;
 use SAML2\Tests\ControlledTimeTest;
@@ -29,7 +30,7 @@ class NotBeforeTest extends ControlledTimeTest
     public function setUp()
     {
         parent::setUp();
-        $this->assertion = \Mockery::mock(\SAML2\Assertion::class);
+        $this->assertion = \Mockery::mock(Assertion::class);
     }
 
     /**

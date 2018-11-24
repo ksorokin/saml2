@@ -8,6 +8,7 @@ use \SAML2\Assertion\Validation\ConstraintValidator\SubjectConfirmationRecipient
 use \SAML2\Assertion\Validation\ConstraintValidator\SubjectConfirmationResponseToMatches;
 use \SAML2\Assertion\Validation\Result;
 use \SAML2\Configuration\Destination;
+use SAML2\XML\saml\SubjectConfirmation;
 use \SAML2\XML\saml\SubjectConfirmationData;
 use \SAML2\XML\saml\SubjectConfirmationMatches;
 
@@ -26,8 +27,8 @@ class SubjectConfirmationRecipientMathchesTest extends \Mockery\Adapter\Phpunit\
     public function setUp()
     {
         parent::setUp();
-        $this->subjectConfirmation = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmation::class);
-        $this->subjectConfirmationData = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmationData::class);
+        $this->subjectConfirmation = \Mockery::mock(SubjectConfirmation::class);
+        $this->subjectConfirmationData = \Mockery::mock(SubjectConfirmationData::class);
         $this->subjectConfirmation->SubjectConfirmationData = $this->subjectConfirmationData;
     }
 

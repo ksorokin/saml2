@@ -7,6 +7,9 @@ namespace SAML2;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
 use SAML2\Exception\RuntimeException;
 use \SimpleSAML\Configuration;
+use \SimpleSAML\Utils\Config;
+use \SimpleSAML\Utils\Crypto;
+use \SimpleSAML\Utils\System;
 
 /**
  * Implementation of the SAML 2.0 SOAP binding.
@@ -14,7 +17,7 @@ use \SimpleSAML\Configuration;
  * @author Shoaib Ali
  * @package SimpleSAMLphp
  */
-class SOAPClient
+final class SOAPClient
 {
     const START_SOAP_ENVELOPE = '<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Header/><soap-env:Body>';
     const END_SOAP_ENVELOPE = '</soap-env:Body></soap-env:Envelope>';
@@ -43,7 +46,7 @@ class SOAPClient
         if ($srcMetadata->hasValue('saml.SOAPClient.certificate')) {
             $cert = $srcMetadata->getValue('saml.SOAPClient.certificate');
             if ($cert !== false) {
-                $ctxOpts['ssl']['local_cert'] = \SimpleSAML\Utils\Config::resolveCert(
+                $ctxOpts['ssl']['local_cert'] = Config::resolveCert(
                     $srcMetadata->getString('saml.SOAPClient.certificate')
                 );
                 if ($srcMetadata->hasValue('saml.SOAPClient.privatekey_pass')) {
@@ -52,13 +55,13 @@ class SOAPClient
             }
         } else {
             /* Use the SP certificate and privatekey if it is configured. */
-            $privateKey = \SimpleSAML\Utils\Crypto::loadPrivateKey($srcMetadata);
-            $publicKey = \SimpleSAML\Utils\Crypto::loadPublicKey($srcMetadata);
+            $privateKey = Crypto::loadPrivateKey($srcMetadata);
+            $publicKey = Crypto::loadPublicKey($srcMetadata);
             if ($privateKey !== null && $publicKey !== null && isset($publicKey['PEM'])) {
                 $keyCertData = $privateKey['PEM'].$publicKey['PEM'];
-                $file = \SimpleSAML\Utils\System::getTempDir().'/'.sha1($keyCertData).'.pem';
+                $file = System::getTempDir().'/'.sha1($keyCertData).'.pem';
                 if (!file_exists($file)) {
-                    \SimpleSAML\Utils\System::writeFile($file, $keyCertData);
+                    System::writeFile($file, $keyCertData);
                 }
                 $ctxOpts['ssl']['local_cert'] = $file;
                 if (isset($privateKey['password'])) {
@@ -79,9 +82,9 @@ class SOAPClient
                     chunk_split($key['X509Certificate'], 64).
                     "-----END CERTIFICATE-----\n";
             }
-            $peerCertFile = \SimpleSAML\Utils\System::getTempDir().'/'.sha1($certData).'.pem';
+            $peerCertFile = System::getTempDir().'/'.sha1($certData).'.pem';
             if (!file_exists($peerCertFile)) {
-                \SimpleSAML\Utils\System::writeFile($peerCertFile, $certData);
+                System::writeFile($peerCertFile, $certData);
             }
             // create ssl context
             $ctxOpts['ssl']['verify_peer'] = true;
@@ -116,7 +119,7 @@ class SOAPClient
 
         // Add soap-envelopes
         $request = $msg->toSignedXML();
-        $request = self::START_SOAP_ENVELOPE.$request->ownerDocument->saveXML($request).self::END_SOAP_ENVELOPE;
+        $requestStr = self::START_SOAP_ENVELOPE.$request->ownerDocument->saveXML($request).self::END_SOAP_ENVELOPE;
 
         Utils::getContainer()->debugMessage($request, 'out');
 
@@ -125,12 +128,10 @@ class SOAPClient
         $destination = $msg->getDestination();
 
         /* Perform SOAP Request over HTTP */
-        $soapresponsexml = $x->__doRequest($request, $destination, $action, $version);
+        $soapresponsexml = $x->__doRequest($requestStr, $destination, $action, $version);
         if ($soapresponsexml === null || $soapresponsexml === "") {
             throw new \Exception('Empty SOAP response, check peer certificate.');
         }
-
-        Utils::getContainer()->debugMessage($soapresponsexml, 'in');
 
         // Convert to SAML2\Message (\DOMElement)
         try {
@@ -138,6 +139,7 @@ class SOAPClient
         } catch (RuntimeException $e) {
             throw new \Exception('Not a SOAP response.', 0, $e);
         }
+        Utils::getContainer()->debugMessage($soapresponsexml, 'in');
 
         $soapfault = $this->getSOAPFault($dom);
         if (isset($soapfault)) {
@@ -168,9 +170,6 @@ class SOAPClient
             return;
         }
 
-        //$out = '';
-        //openssl_x509_export($options['ssl']['peer_certificate'], $out);
-
         $key = openssl_pkey_get_public($options['ssl']['peer_certificate']);
         if ($key === false) {
             Utils::getContainer()->getLogger()->warning('Unable to get public key from peer certificate.');
@@ -191,7 +190,7 @@ class SOAPClient
             return;
         }
 
-        $msg->addValidator(['\SAML2\SOAPClient', 'validateSSL'], $keyInfo['key']);
+        $msg->addValidator([SOAPClient::class, 'validateSSL'], $keyInfo['key']);
     }
 
     /**
@@ -224,7 +223,7 @@ class SOAPClient
     /*
      * Extracts the SOAP Fault from SOAP message
      * @param \DOMDocument $soapMessage Soap response needs to be type DOMDocument
-     * @return $soapfaultstring string|null
+     * @return string|null
      */
     private function getSOAPFault(\DOMDocument $soapMessage)
     {

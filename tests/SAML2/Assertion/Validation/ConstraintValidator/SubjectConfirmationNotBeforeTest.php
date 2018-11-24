@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SAML2\Tests\Assertion\Validation\ConstraintValidator;
 
+use SAML2\XML\saml\SubjectConfirmation;
+use SAML2\XML\saml\SubjectConfirmationData;
 use SAML2\Assertion\Validation\ConstraintValidator\SubjectConfirmationNotBefore;
 use SAML2\Assertion\Validation\Result;
 use SAML2\Tests\ControlledTimeTest;
@@ -27,8 +29,8 @@ class SubjectConfirmationNotBeforeTest extends ControlledTimeTest
     public function setUp()
     {
         parent::setUp();
-        $this->subjectConfirmation = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmation::class);
-        $this->subjectConfirmationData = \Mockery::mock(\SAML2\XML\saml\SubjectConfirmationData::class);
+        $this->subjectConfirmation = \Mockery::mock(SubjectConfirmation::class);
+        $this->subjectConfirmationData = \Mockery::mock(SubjectConfirmationData::class);
         $this->subjectConfirmation->SubjectConfirmationData = $this->subjectConfirmationData;
     }
 

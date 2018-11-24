@@ -6,13 +6,14 @@ namespace SAML2;
 
 use RobRichards\XMLSecLibs\XMLSecEnc;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
+use SAML2\XML\saml\NameID;
 
 /**
  * Class for SAML 2 logout request messages.
  *
  * @package SimpleSAMLphp
  */
-class LogoutRequest extends Request
+final class LogoutRequest extends Request
 {
     /**
      * The expiration time of this request.
@@ -107,7 +108,7 @@ class LogoutRequest extends Request
     /**
      * Check whether the NameId is encrypted.
      *
-     * @return true if the NameId is encrypted, false if not.
+     * @return boolean True if the NameId is encrypted, false if not.
      */
     public function isNameIdEncrypted()
     {
@@ -163,7 +164,7 @@ class LogoutRequest extends Request
 
         $nameId = Utils::decryptElement($this->encryptedNameId, $key, $blacklist);
         Utils::getContainer()->debugMessage($nameId, 'decrypt');
-        $this->nameId = new XML\saml\NameID($nameId);
+        $this->nameId = new NameID($nameId);
 
         $this->encryptedNameId = null;
     }
@@ -188,7 +189,7 @@ class LogoutRequest extends Request
      *
      * @param \SAML2\XML\saml\NameID|null $nameId The name identifier of the session that should be terminated.
      */
-    public function setNameId(\SAML2\XML\saml\NameID $nameId = null)
+    public function setNameId(NameID $nameId = null)
     {
         $this->nameId = $nameId;
     }
@@ -257,7 +258,7 @@ class LogoutRequest extends Request
         if ($this->encryptedNameId === null) {
             $this->nameId->toXML($root);
         } else {
-            $eid = $root->ownerDocument->createElementNS(Constants::NS_SAML, 'saml:' . 'EncryptedID');
+            $eid = $root->ownerDocument->createElementNS(Constants::NS_SAML, 'saml:'.'EncryptedID');
             $root->appendChild($eid);
             $eid->appendChild($root->ownerDocument->importNode($this->encryptedNameId, true));
         }

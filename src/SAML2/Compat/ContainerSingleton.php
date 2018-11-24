@@ -6,15 +6,15 @@ namespace SAML2\Compat;
 
 use SAML2\Compat\Ssp\Container;
 
-class ContainerSingleton
+final class ContainerSingleton
 {
     /**
-     * @var \SAML2\Compat\Ssp\Container
+     * @var \SAML2\Compat\AbstractContainer
      */
     protected static $container;
 
     /**
-     * @return \SAML2\Compat\Ssp\Container
+     * @return \SAML2\Compat\AbstractContainer
      */
     public static function getInstance()
     {
@@ -37,7 +37,7 @@ class ContainerSingleton
     }
 
     /**
-     * @return \SAML2\Compat\Ssp\Container
+     * @return \SAML2\Compat\AbstractContainer
      */
     public static function initSspContainer()
     {

@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace SAML2\Certificate;
 
-use SAML2\Exception\InvalidArgumentException;
-
-class PrivateKey extends Key
+final class PrivateKey extends Key
 {
     public static function create(string $keyContents, string $passphrase = null)
     {
         $keyData = ['PEM' => $keyContents, self::USAGE_ENCRYPTION => true];
-        if ($passphrase) {
+        if (is_string($passphrase)) {
             $keyData['passphrase'] = $passphrase;
         }
 
         return new self($keyData);
     }
 
+    /**
+     * @return string
+     */
     public function getKeyAsString()
     {
         return $this->keyData['PEM'];

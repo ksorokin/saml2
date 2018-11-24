@@ -7,6 +7,7 @@ namespace SAML2\Tests;
 use SAML2\Tests\SignedElementHelperMock;
 use SAML2\Tests\CertificatesMock;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 use SAML2\SignedElementHelper;
 use SAML2\Utils;
 
@@ -137,7 +138,7 @@ edF1YfJgq35hcMMLY9RE/0C0bCI=
 
         $key = $seh->getSignatureKey();
 
-        $this->assertInstanceOf(\RobRichards\XMLSecLibs\XMLSecurityKey::class, $key);
+        $this->assertInstanceOf(XMLSecurityKey::class, $key);
         $this->assertEquals($origkey, $key);
 
         $certs = $seh->getCertificates();

@@ -16,6 +16,7 @@ use SAML2\Utilities\Certificate;
 use SAML2\Signature\PublicKeyValidator;
 use SAML2\Configuration\CertificateProvider;
 use SAML2\SignedElement;
+use \Psr\Log\NullLogger;
 
 class PublicKeyValidatorTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
@@ -35,7 +36,7 @@ class PublicKeyValidatorTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     public function it_cannot_validate_if_no_keys_can_be_loaded()
     {
         $keyloaderMock = $this->prepareKeyLoader(new KeyCollection());
-        $validator = new PublicKeyValidator(new \Psr\Log\NullLogger(), $keyloaderMock);
+        $validator = new PublicKeyValidator(new NullLogger(), $keyloaderMock);
 
         $this->assertFalse($validator->canValidate($this->mockSignedElement, $this->mockConfiguration));
     }
@@ -47,7 +48,7 @@ class PublicKeyValidatorTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     public function it_will_validate_when_keys_can_be_loaded()
     {
         $keyloaderMock = $this->prepareKeyLoader(new KeyCollection([1, 2]));
-        $validator = new PublicKeyValidator(new \Psr\Log\NullLogger(), $keyloaderMock);
+        $validator = new PublicKeyValidator(new NullLogger(), $keyloaderMock);
 
         $this->assertTrue($validator->canValidate($this->mockSignedElement, $this->mockConfiguration));
     }

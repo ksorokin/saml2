@@ -7,7 +7,6 @@ namespace SAML2\Certificate;
 use SAML2\Certificate\Exception\InvalidCertificateStructureException;
 use SAML2\Certificate\Exception\NoKeysFoundException;
 use SAML2\Configuration\CertificateProvider;
-use SAML2\Exception\InvalidArgumentException;
 use SAML2\Utilities\Certificate;
 use SAML2\Utilities\File;
 
@@ -84,7 +83,7 @@ class KeyLoader
      * Loads the keys given, optionally excluding keys when a usage is given and they
      * are not configured to be used with the usage given
      *
-     * @param array $configuredKeys
+     * @param array|\Traversable $configuredKeys
      * @param string|null $usage
      */
     public function loadKeys(array $configuredKeys, string $usage = null)
@@ -96,7 +95,7 @@ class KeyLoader
                 $key = new Key($keyData);
             }
 
-            if ($usage && !$key->canBeUsedFor($usage)) {
+            if (($usage !== null) && !$key->canBeUsedFor($usage)) {
                 continue;
             }
 

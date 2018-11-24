@@ -18,7 +18,7 @@ use \SimpleSAML\Store;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class HTTPArtifact extends Binding
+final class HTTPArtifact extends Binding
 {
     /**
      * @var \SimpleSAML\Configuration
@@ -82,7 +82,7 @@ class HTTPArtifact extends Binding
     {
         if (array_key_exists('SAMLart', $_REQUEST)) {
             $artifact = base64_decode($_REQUEST['SAMLart']);
-            $endpointIndex =  bin2hex(substr($artifact, 2, 2));
+            $endpointIndex = bin2hex(substr($artifact, 2, 2));
             $sourceId = bin2hex(substr($artifact, 4, 20));
         } else {
             throw new \Exception('Missing SAMLart parameter.');
@@ -98,7 +98,7 @@ class HTTPArtifact extends Binding
 
         $endpoint = null;
         foreach ($idpMetadata->getEndpoints('ArtifactResolutionService') as $ep) {
-            if ($ep['index'] ===  hexdec($endpointIndex)) {
+            if ($ep['index'] === hexdec($endpointIndex)) {
                 $endpoint = $ep;
                 break;
             }
@@ -120,7 +120,7 @@ class HTTPArtifact extends Binding
         $ar->setDestination($endpoint['Location']);
 
         /* Sign the request */
-        \sspmod_saml_Message::addSign($this->spMetadata, $idpMetadata, $ar); // Shoaib - moved from the SOAPClient.
+        \SimpleSAML\Module\saml\Message::addSign($this->spMetadata, $idpMetadata, $ar); // Shoaib - moved from the SOAPClient.
 
         $soap = new SOAPClient();
 
