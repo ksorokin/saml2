@@ -20,7 +20,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      *
      * @var bool|null
      */
-    public $WantAuthnRequestsSigned = null;
+    private $WantAuthnRequestsSigned = null;
 
     /**
      * List of SingleSignOnService endpoints.
@@ -29,7 +29,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      *
      * @var \SAML2\XML\md\EndpointType[]
      */
-    public $SingleSignOnService = [];
+    private $SingleSignOnService = [];
 
     /**
      * List of NameIDMappingService endpoints.
@@ -38,7 +38,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      *
      * @var \SAML2\XML\md\EndpointType[]
      */
-    public $NameIDMappingService = [];
+    private $NameIDMappingService = [];
 
     /**
      * List of AssertionIDRequestService endpoints.
@@ -47,7 +47,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      *
      * @var \SAML2\XML\md\EndpointType[]
      */
-    public $AssertionIDRequestService = [];
+    private $AssertionIDRequestService = [];
 
     /**
      * List of supported attribute profiles.
@@ -56,7 +56,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      *
      * @var array
      */
-    public $AttributeProfile = [];
+    private $AttributeProfile = [];
 
     /**
      * List of supported attributes.
@@ -65,7 +65,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      *
      * @var \SAML2\XML\saml\Attribute[]
      */
-    public $Attribute = [];
+    private $Attribute = [];
 
     /**
      * Initialize an IDPSSODescriptor.
@@ -99,6 +99,114 @@ final class IDPSSODescriptor extends SSODescriptorType
         foreach (Utils::xpQuery($xml, './saml_assertion:Attribute') as $a) {
             $this->Attribute[] = new Attribute($a);
         }
+    }
+
+    /**
+     * Collect the value of the WantAuthnRequestsSigned-property
+     * @return bool|null
+     */
+    public function wantAuthnRequestsSigned()
+    {
+        return $this->WantAuthnRequests;
+    }
+
+    /**
+     * Set the value of the WantAuthnRequestsSigned-property
+     * @param bool|null $flag
+     */
+    public function setWantAuthnRequestsSigned(bool $flag = null)
+    {
+        $this->WantAuthnRequestsSigned = $flag;
+    }
+
+    /**
+     * Collect the value of the SingleSignOnService-property
+     * @return \SAML2\XML\md\EndpointType[]
+     */
+    public function getSingleSignOnService()
+    {
+        return $this->SingleSignOnService;
+    }
+
+    /**
+     * Set the value of the SingleSignOnService-property
+     * @param array $singleSignOnService
+     */
+    public function setSingleSignOnService(array $singleSignOnService)
+    {
+        $this->SingleSignOnService = $singleSignOnService;
+    }
+
+    /**
+     * Collect the value of the NameIDMappingService-property
+     * @return \SAML2\XML\md\EndpointType[]
+     */
+    public function getNameIDMappingService()
+    {
+        return $this->NameIDMappingService;
+    }
+
+    /**
+     * Set the value of the NameIDMappingService-property
+     * @param array $nameIDMappingService
+     */
+    public function setNameIDMappingService(array $nameIDMappingService)
+    {
+        $this->NameIDMappingService = $nameIDMappingService;
+    }
+
+    /**
+     * Collect the value of the AssertionIDRequestService-property
+     * @return \SAML2\XML\md\EndpointType[]
+     */
+    public function getAssertionIDRequestService()
+    {
+        return $this->AssertionIDRequestService;
+    }
+
+    /**
+     * Set the value of the AssertionIDRequestService-property
+     * @param array $assertionIDRequestService
+     */
+    public function setAssertionIDRequestService(array $assertionIDRequestService)
+    {
+        $this->AssertionIDRequestService = $assertionIDRequestService;
+    }
+
+    /**
+     * Collect the value of the AttributeProfile-property
+     * @return array
+     */
+    public function getAttributeProfile()
+    {
+        return $this->AttributeProfile;
+    }
+
+    /**
+     * Set the value of the AttributeProfile-property
+     * @param array $attributeProfile
+     */
+    public function setAttributeProfile(array $attributeProfile)
+    {
+        $this->AttributeProfile = $attributeProfile;
+    }
+
+    /**
+     * Collect the value of the Attribute-property
+     * @return \SAML2\XML\md\Attribute[]
+     */
+    public function getAttribute()
+    {
+        return $this->Attribute;
+    }
+
+    /**
+     * Set the value of the Attribute-property
+     * @param array $attribute
+     */
+    public function setAttribute(array $attribute)
+    {
+        $this->Attribute = $attribute;
     }
 
     /**
