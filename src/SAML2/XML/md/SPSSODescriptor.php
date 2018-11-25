@@ -92,7 +92,7 @@ final class SPSSODescriptor extends SSODescriptorType
      * Collect the value of the WantAssertionsSigned-property
      * @return bool|null
      */
-    public function getWantAssertionsSigned()
+    public function wantAssertionsSigned()
     {
         return $this->WantAssertionsSigned;
     }
