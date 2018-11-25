@@ -1216,7 +1216,7 @@ class Assertion extends SignedElement
     /**
      * @return bool
      */
-    public function getWasSignedAtConstruction()
+    public function wasSignedAtConstruction()
     {
         return $this->wasSignedAtConstruction;
     }

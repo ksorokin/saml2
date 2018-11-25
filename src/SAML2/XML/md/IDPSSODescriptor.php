@@ -107,7 +107,7 @@ final class IDPSSODescriptor extends SSODescriptorType
      */
     public function wantAuthnRequestsSigned()
     {
-        return $this->WantAuthnRequests;
+        return $this->WantAuthnRequestsSigned;
     }
 
     /**
