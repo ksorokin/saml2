@@ -22,6 +22,11 @@ final class EncryptedAssertion
     private $encryptedData;
 
     /**
+     * @var bool
+     */
+    protected $wasSignedAtConstruction = false;
+
+    /**
      * Constructor for SAML 2 encrypted assertions.
      *
      * @param \DOMElement|null $xml The encrypted assertion XML element.
@@ -40,6 +45,14 @@ final class EncryptedAssertion
             throw new \Exception('More than one encrypted data element in <saml:EncryptedAssertion>.');
         }
         $this->encryptedData = $data[0];
+    }
+
+    /**
+     * @return bool
+     */
+    public function wasSignedAtConstruction()
+    {
+        return $this->wasSignedAtConstruction;
     }
 
     /**
