@@ -23,6 +23,20 @@ class SignedElementHelper extends SignedElement
     private $validators;
 
     /**
+     * How long this element is valid, as a unix timestamp.
+     *
+     * @var int|null
+     */
+    public $validUntil;
+
+    /**
+     * The length of time this element can be cached, as string.
+     *
+     * @var string|null
+     */
+    public $cacheDuration;
+
+    /**
      * Initialize the helper class.
      *
      * @param \DOMElement|null $xml The XML element which may be signed.
@@ -134,6 +148,24 @@ class SignedElementHelper extends SignedElement
         }
 
         return $ret;
+    }
+
+    /**
+     * Collect the value of the validUntil-property
+     * @return int|null
+     */
+    public function getValidUntil()
+    {
+        return $this->validUntil;
+    }
+
+    /**
+     * Set the value of the validUntil-property
+     * @param int|null $validUntil
+     */
+    public function setValidUntil(int $validUntil = null)
+    {
+        $this->validUntil = $validUntil;
     }
 
     /**
