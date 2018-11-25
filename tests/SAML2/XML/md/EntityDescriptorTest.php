@@ -141,9 +141,9 @@ XML
 
         $this->assertTrue($entityDescriptor instanceof EntityDescriptor);
         $this->assertEquals('theEntityID', $entityDescriptor->entityID);
-        $this->assertEquals('theID', $entityDescriptor->ID);
-        $this->assertEquals(1262349296, $entityDescriptor->validUntil);
-        $this->assertEquals('PT5000S', $entityDescriptor->cacheDuration);
+        $this->assertEquals('theID', $entityDescriptor->getID());
+        $this->assertEquals(1262349296, $entityDescriptor->getValidUntil());
+        $this->assertEquals('PT5000S', $entityDescriptor->getCacheDuration());
 
         $this->assertCount(1, $entityDescriptor->RoleDescriptor);
         $this->assertTrue($entityDescriptor->RoleDescriptor[0] instanceof AttributeAuthorityDescriptor);

@@ -28,7 +28,7 @@ final class EntityDescriptor extends SignedElementHelper
      *
      * @var string|null
      */
-    public $ID;
+    private $ID;
 
     /**
      * How long this element is valid, as a unix timestamp.
@@ -42,7 +42,7 @@ final class EntityDescriptor extends SignedElementHelper
      *
      * @var string|null
      */
-    public $cacheDuration;
+    private $cacheDuration;
 
     /**
      * Extensions on this element.
@@ -179,6 +179,42 @@ final class EntityDescriptor extends SignedElementHelper
         foreach (Utils::xpQuery($xml, './saml_metadata:AdditionalMetadataLocation') as $aml) {
             $this->AdditionalMetadataLocation[] = new AdditionalMetadataLocation($aml);
         }
+    }
+
+    /**
+     * Collect the value of the ID-property
+     * @return string|null
+     */
+    public function getID()
+    {
+        return $this->ID;
+    }
+
+    /**
+     * Set the value of the ID-property
+     * @param string|null $Id
+     */
+    public function setID(string $Id = null)
+    {
+        $this->ID = $Id;
+    }
+
+    /**
+     * Collect the value of the cacheDuration-property
+     * @return string|null
+     */
+    public function getCacheDuration()
+    {
+        return $this->cacheDuration;
+    }
+
+    /**
+     * Set the value of the cacheDuration-property
+     * @param string|null $cacheDuration
+     */
+    public function setCacheDuration(string $cacheDuration = null)
+    {
+        $this->cacheDuration = $cacheDuration;
     }
 
     /**
