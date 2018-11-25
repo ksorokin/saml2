@@ -13,24 +13,8 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
  *
  * @package SimpleSAMLphp
  */
-class SignedElementHelper implements SignedElement
+class SignedElementHelper extends SignedElement
 {
-    /**
-     * The private key we should use to sign the message.
-     *
-     * The private key can be null, in which case the message is sent unsigned.
-     *
-     * @var XMLSecurityKey|null
-     */
-    private $signatureKey;
-
-    /**
-     * List of certificates that should be included in the message.
-     *
-     * @var array
-     */
-    private $certificates;
-
     /**
      * Available methods for validating this message.
      *
@@ -119,50 +103,6 @@ class SignedElementHelper implements SignedElement
 
         /* No validators were able to validate the message. */
         throw $exceptions[0];
-    }
-
-    /**
-     * Retrieve the private key we should use to sign the message.
-     *
-     * @return XMLSecurityKey|null The key, or NULL if no key is specified.
-     */
-    public function getSignatureKey()
-    {
-        return $this->signatureKey;
-    }
-
-    /**
-     * Set the private key we should use to sign the message.
-     *
-     * If the key is null, the message will be sent unsigned.
-     *
-     * @param XMLSecurityKey|null $signatureKey
-     */
-    public function setSignatureKey(XMLSecurityKey $signatureKey = null)
-    {
-        $this->signatureKey = $signatureKey;
-    }
-
-    /**
-     * Set the certificates that should be included in the message.
-     *
-     * The certificates should be strings with the PEM encoded data.
-     *
-     * @param array $certificates An array of certificates.
-     */
-    public function setCertificates(array $certificates)
-    {
-        $this->certificates = $certificates;
-    }
-
-    /**
-     * Retrieve the certificates that are included in the message.
-     *
-     * @return array An array of certificates.
-     */
-    public function getCertificates()
-    {
-        return $this->certificates;
     }
 
     /**
