@@ -27,14 +27,14 @@ class SignedElementHelper extends SignedElement
      *
      * @var int|null
      */
-    public $validUntil;
+    private $validUntil;
 
     /**
      * The length of time this element can be cached, as string.
      *
      * @var string|null
      */
-    public $cacheDuration;
+    private $cacheDuration;
 
     /**
      * Initialize the helper class.
