@@ -169,6 +169,24 @@ class SignedElementHelper extends SignedElement
     }
 
     /**
+     * Collect the value of the cacheDuration-property
+     * @return string|null
+     */
+    public function getCacheDuration()
+    {
+        return $this->validUntil;
+    }
+
+    /**
+     * Set the value of the cacheDuration-property
+     * @param string|null $cacheDuration
+     */
+    public function setCacheDuration(string $cacheDuration = null)
+    {
+        $this->cacheDuration = $cacheDuration;
+    }
+
+    /**
      * Sign the given XML element.
      *
      * @param \DOMElement      $root         The element we should sign.

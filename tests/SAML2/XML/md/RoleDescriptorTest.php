@@ -16,8 +16,8 @@ class RoleDescriptorTest extends \PHPUnit\Framework\TestCase
     {
         $roleDescriptor = new RoleDescriptorMock();
         $roleDescriptor->ID = 'SomeID';
-        $roleDescriptor->validUntil = 1234567890;
-        $roleDescriptor->cacheDuration = 'PT5000S';
+        $roleDescriptor->setValidUntil(1234567890);
+        $roleDescriptor->setCacheDuration('PT5000S');
         $roleDescriptor->protocolSupportEnumeration = [
             'protocol1',
             'protocol2',

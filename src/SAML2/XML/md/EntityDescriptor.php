@@ -99,10 +99,10 @@ final class EntityDescriptor extends SignedElementHelper
             $this->ID = $xml->getAttribute('ID');
         }
         if ($xml->hasAttribute('validUntil')) {
-            $this->validUntil = Utils::xsDateTimeToTimestamp($xml->getAttribute('validUntil'));
+            $this->setValidUntil(Utils::xsDateTimeToTimestamp($xml->getAttribute('validUntil')));
         }
         if ($xml->hasAttribute('cacheDuration')) {
-            $this->cacheDuration = $xml->getAttribute('cacheDuration');
+            $this->setCacheDuration($xml->getAttribute('cacheDuration'));
         }
 
         $this->Extensions = Extensions::getList($xml);
@@ -186,24 +186,6 @@ final class EntityDescriptor extends SignedElementHelper
     }
 
     /**
-     * Collect the value of the cacheDuration-property
-     * @return string|null
-     */
-    public function getCacheDuration()
-    {
-        return $this->cacheDuration;
-    }
-
-    /**
-     * Set the value of the cacheDuration-property
-     * @param string|null $cacheDuration
-     */
-    public function setCacheDuration(string $cacheDuration = null)
-    {
-        $this->cacheDuration = $cacheDuration;
-    }
-
-    /**
      * Create this EntityDescriptor.
      *
      * @param \DOMElement|null $parent The EntitiesDescriptor we should append this EntityDescriptor to.
@@ -213,8 +195,8 @@ final class EntityDescriptor extends SignedElementHelper
     {
         assert(is_string($this->entityID));
         assert(is_null($this->ID) || is_string($this->ID));
-        assert(is_null($this->validUntil) || is_int($this->validUntil));
-        assert(is_null($this->cacheDuration) || is_string($this->cacheDuration));
+        assert(is_null($this->getValidUntil()) || is_int($this->getValidUntil()));
+        assert(is_null($this->getCacheDuration) || is_string($this->getCacheDuration()));
         assert(is_array($this->Extensions));
         assert(is_array($this->RoleDescriptor));
         assert(is_null($this->AffiliationDescriptor) || $this->AffiliationDescriptor instanceof AffiliationDescriptor);
@@ -237,12 +219,12 @@ final class EntityDescriptor extends SignedElementHelper
             $e->setAttribute('ID', $this->ID);
         }
 
-        if (isset($this->validUntil)) {
-            $e->setAttribute('validUntil', gmdate('Y-m-d\TH:i:s\Z', $this->validUntil));
+        if ($this->getValidUntil() !== null) {
+            $e->setAttribute('validUntil', gmdate('Y-m-d\TH:i:s\Z', $this->getValidUntil()));
         }
 
-        if (isset($this->cacheDuration)) {
-            $e->setAttribute('cacheDuration', $this->cacheDuration);
+        if ($this->getCacheDuration() !== null) {
+            $e->setAttribute('cacheDuration', $this->getCacheDuration());
         }
 
         Extensions::addList($e, $this->Extensions);

@@ -63,10 +63,10 @@ final class EntitiesDescriptor extends SignedElementHelper
             $this->ID = $xml->getAttribute('ID');
         }
         if ($xml->hasAttribute('validUntil')) {
-            $this->validUntil = Utils::xsDateTimeToTimestamp($xml->getAttribute('validUntil'));
+            $this->setValidUntil(Utils::xsDateTimeToTimestamp($xml->getAttribute('validUntil')));
         }
         if ($xml->hasAttribute('cacheDuration')) {
-            $this->cacheDuration = $xml->getAttribute('cacheDuration');
+            $this->setCacheDuration($xml->getAttribute('cacheDuration'));
         }
         if ($xml->hasAttribute('Name')) {
             $this->Name = $xml->getAttribute('Name');
@@ -92,8 +92,8 @@ final class EntitiesDescriptor extends SignedElementHelper
     public function toXML(\DOMElement $parent = null)
     {
         assert(is_null($this->ID) || is_string($this->ID));
-        assert(is_null($this->validUntil) || is_int($this->validUntil));
-        assert(is_null($this->cacheDuration) || is_string($this->cacheDuration));
+        assert(is_null($this->getValidUntil()) || is_int($this->getValidUntil()));
+        assert(is_null($this->getCacheDuration()) || is_string($this->getCacheDuration()));
         assert(is_null($this->Name) || is_string($this->Name));
         assert(is_array($this->Extensions));
         assert(is_array($this->children));
@@ -111,12 +111,12 @@ final class EntitiesDescriptor extends SignedElementHelper
             $e->setAttribute('ID', $this->ID);
         }
 
-        if (isset($this->validUntil)) {
-            $e->setAttribute('validUntil', gmdate('Y-m-d\TH:i:s\Z', $this->validUntil));
+        if ($this->getValidUntil() !== null) {
+            $e->setAttribute('validUntil', gmdate('Y-m-d\TH:i:s\Z', $this->getValidUntil()));
         }
 
-        if (isset($this->cacheDuration)) {
-            $e->setAttribute('cacheDuration', $this->cacheDuration);
+        if ($this->getCacheDuration() !== null) {
+            $e->setAttribute('cacheDuration', $this->getCacheDuration());
         }
 
         if (isset($this->Name)) {
