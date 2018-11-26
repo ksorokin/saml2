@@ -174,7 +174,7 @@ class SignedElementHelper extends SignedElement
      */
     public function getCacheDuration()
     {
-        return $this->getCacheDuration;
+        return $this->cacheDuration;
     }
 
     /**
